@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>性別サプライズ発表 - 後編</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #bbdefb, #e3f2fd);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Helvetica Neue', sans-serif;
+      position: relative;
+    }
+    .balloon {
+      position: absolute;
+      width: 40vw;
+      max-width: 300px;
+      bottom: -100px;
+      animation: floatUp 3s ease forwards;
+    }
+    .countdown {
+      position: absolute;
+      color: white;
+      font-size: 5vw;
+      font-weight: bold;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+    @keyframes floatUp {
+      0% { bottom: -100px; }
+      100% { bottom: 50%; }
+    }
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #2196f3;
+      opacity: 0;
+      border-radius: 50%;
+    }
+    .confetti.show {
+      animation: confettiFall 3s linear forwards;
+      opacity: 1;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
+    }
+    .baby {
+      width: 50vw;
+      max-width: 200px;
+      opacity: 0;
+      transition: opacity 1s ease;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .baby.show {
+      opacity: 1;
+      animation: shake 1.5s infinite;
+    }
+    @keyframes shake {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      25% { transform: translate(-50%, -50%) rotate(2deg); }
+      50% { transform: translate(-50%, -50%) rotate(0deg); }
+      75% { transform: translate(-50%, -50%) rotate(-2deg); }
+      100% { transform: translate(-50%, -50%) rotate(0deg); }
+    }
+    .boy-text {
+      position: absolute;
+      top: 65%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 8vw;
+      color: #2196f3;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .boy-text.show {
+      opacity: 1;
+    }
+    @media screen and (max-width: 768px) {
+      .balloon {
+        width: 60vw;
+      }
+      .baby {
+        width: 70vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="images/balloon.png" alt="風船" class="balloon" id="balloon">
+  <div class="countdown" id="countdown">3</div>
+  <img src="images/baby_boy.png" alt="男の子イラスト" class="baby" id="baby">
+  <div class="boy-text" id="boyText">Boy</div>
+  <audio id="bgm" src="audio/happy.mp3" preload="auto"></audio>
+
+  <script>
+    const bgm = document.getElementById('bgm');
+    const balloon = document.getElementById('balloon');
+    const baby = document.getElementById('baby');
+    const countdown = document.getElementById('countdown');
+    const boyText = document.getElementById('boyText');
+
+    // BGMスタート
+    window.onload = () => {
+      bgm.play();
+    }
+
+    // カウントダウン開始
+    let count = 3;
+    const timer = setInterval(() => {
+      count--;
+      countdown.textContent = count;
+      if (count === 0) {
+        clearInterval(timer);
+        countdown.style.display = 'none';
+        balloon.style.display = 'none';
+
+        // 紙吹雪20個生成
+        for(let i=0; i<20; i++){
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti show';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.top = Math.random() * 20 + 'vh';
+          document.body.appendChild(confetti);
+        }
+
+        // 青色風船30個飛ばす
+        for(let i=0; i<30; i++){
+          const flyBalloon = document.createElement('div');
+          flyBalloon.style.width = '20px';
+          flyBalloon.style.height = '30px';
+          flyBalloon.style.background = '#2196f3';
+          flyBalloon.style.borderRadius = '50%';
+          flyBalloon.style.position = 'absolute';
+          flyBalloon.style.left = Math.random() * 100 + 'vw';
+          flyBalloon.style.bottom = '0';
+          flyBalloon.style.animation = 'balloonFly 4s linear forwards';
+          document.body.appendChild(flyBalloon);
+        }
+
+        // 男の子イラスト＋Boy文字表示
+        baby.classList.add('show');
+        boyText.classList.add('show');
+      }
+    }, 1000);
+
+    // 風船飛ばすアニメーション
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes balloonFly {
+        0% { transform: translateY(0); opacity: 1; }
+        100% { transform: translateY(-100vh); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

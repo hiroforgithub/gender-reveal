@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Gender Reveal - 1ページ目</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f0f8ff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+    .button-container {
+      position: absolute;
+      bottom: 30px;
+    }
+    .reveal-button {
+      padding: 15px 30px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: background-color 0.3s;
+    }
+    .reveal-button:hover {
+      background-color: #ff1493;
+    }
+  </style>
+</head>
+<body>
+  <img src="images/image1.png" alt="Gender Reveal Image">
+  <div class="button-container">
+    <button class="reveal-button" onclick="location.href='result.html'">結果を見る</button>
+  </div>
+</body>
+</html>
